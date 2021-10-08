@@ -1,0 +1,37 @@
+#+title: Elfeed - RSS Reader in Emacs
+
+What is RSS and why do we still need it in 2021? [[./screenshots/date-07-10-2021-time-13-54-23.png]]
+
+- I think of it as a way to get a summary of things that 
+  - I might want to read
+  - from many sources
+  - in one place
+  - that is easy to review
+  - and easy to do things with each entry
+    - Visit full source
+    - add bibtex entry
+    - email to someone
+    - capture notes
+    - etc...
+
+https://fraserlab.com/2013/09/28/The-Fraser-Lab-method-of-following-the-scientific-literature/
+
+
+
+
+
+
+
+
+* The setup
+
+https://github.com/skeeto/elfeed
+
+
+https://github.com/sp1ff/elfeed-score
+
+
+- My config [[nb:user::my-elfeed.el::c1]]
+- score file [[nb:scimax::userelfeed.score::c1]]
+
+Captured entries  [[./../../org-mode/elfeed.org]]

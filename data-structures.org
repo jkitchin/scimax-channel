@@ -1,0 +1,235 @@
+#+title: Introduction to data structures in emacs-lisp
+
+#+attr_org: :width 600
+[[././screenshots/2021-10-02:11:04:57.png]]
+** string
+
+#+BEGIN_SRC emacs-lisp
+(setq S "abc")
+(substring S 0 1)
+#+END_SRC
+
+#+RESULTS:
+: a
+
+** list 
+
+#+BEGIN_SRC emacs-lisp
+'(a b c)
+#+END_SRC
+
+#+RESULTS:
+| a | b | c |
+
+#+BEGIN_SRC emacs-lisp
+(setq L '(1 2 3))
+L
+#+END_SRC
+
+#+RESULTS:
+| 1 | 2 | 3 |
+
+#+BEGIN_SRC emacs-lisp
+(car L)
+#+END_SRC
+
+#+RESULTS:
+: 1
+
+#+BEGIN_SRC emacs-lisp
+(cl-first L)
+#+END_SRC
+
+#+RESULTS:
+: 1
+
+#+BEGIN_SRC emacs-lisp
+(nth 1 L)
+#+END_SRC
+
+#+RESULTS:
+: 2
+
+#+BEGIN_SRC emacs-lisp
+(elt L 1)
+#+END_SRC
+
+#+RESULTS:
+: 2
+
+#+BEGIN_SRC emacs-lisp
+(cl-second L)
+#+END_SRC
+
+#+RESULTS:
+: 2
+
+#+BEGIN_SRC emacs-lisp
+(cdr L)
+#+END_SRC
+
+#+RESULTS:
+| 2 | 3 |
+
+#+BEGIN_SRC emacs-lisp
+(car (last L))
+#+END_SRC
+
+#+RESULTS:
+: 3
+
+#+BEGIN_SRC emacs-lisp
+(butlast L)
+#+END_SRC
+
+#+RESULTS:
+| 1 | 2 |
+
+#+BEGIN_SRC emacs-lisp
+(setq L '(1 2 (+ 1 2)))
+L
+#+END_SRC
+
+#+RESULTS:
+| 1 | 2 | (+ 1 2) |
+
+#+BEGIN_SRC emacs-lisp
+(setq L (list 1 2 (+ 1 2)))
+L
+#+END_SRC
+
+#+RESULTS:
+| 1 | 2 | 3 |
+
+#+BEGIN_SRC emacs-lisp
+(setq L `(1 2 ,(+ 1 2)))
+L
+#+END_SRC
+
+#+RESULTS:
+| 1 | 2 | 3 |
+
+
+** vector 
+
+#+BEGIN_SRC emacs-lisp
+(setq v [1 2 3])
+v
+#+END_SRC
+
+#+RESULTS:
+: [1 2 3]
+
+#+BEGIN_SRC emacs-lisp
+(setq v [1 2 (+ 1 2)])
+v
+#+END_SRC
+
+#+RESULTS:
+: [1 2 (+ 1 2)]
+
+#+BEGIN_SRC emacs-lisp
+(setq v (vector 1 2 (+ 1 2)))
+v
+#+END_SRC
+
+#+RESULTS:
+: [1 2 3]
+
+#+BEGIN_SRC emacs-lisp
+(elt v 1)
+#+END_SRC
+
+#+RESULTS:
+: 2
+
+#+BEGIN_SRC emacs-lisp
+(aref v 1)
+#+END_SRC
+
+#+RESULTS:
+: 2
+
+
+** a-list
+
+
+#+BEGIN_SRC emacs-lisp
+(key . value)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(setq A '((a . 1) (b . 2) (c . 3)))
+A
+#+END_SRC
+
+#+RESULTS:
+: ((a . 1) (b . 2) (c . 3))
+
+#+BEGIN_SRC emacs-lisp
+(cdr (assoc 'a A))
+#+END_SRC
+
+#+RESULTS:
+: 1
+
+#+BEGIN_SRC emacs-lisp
+(car (rassoc 2 A))
+#+END_SRC
+
+#+RESULTS:
+: b
+
+#+BEGIN_SRC emacs-lisp
+(alist-get 'b A)
+#+END_SRC
+
+#+RESULTS:
+: 2
+
+
+** p-list
+
+#+BEGIN_SRC emacs-lisp
+(setq P '(:a 1 :b 2 :c 3))
+P
+#+END_SRC
+
+#+RESULTS:
+| :a | 1 | :b | 2 | :c | 3 |
+
+#+BEGIN_SRC emacs-lisp
+(plist-get P :b)
+#+END_SRC
+
+#+RESULTS:
+: 2
+
+** hash table
+
+#+BEGIN_SRC emacs-lisp
+(setq h #s(hash-table data (a 1 b 2 c 3)))
+h
+#+END_SRC
+
+#+RESULTS:
+: #s(hash-table size 65 test eql rehash-size 1.5 rehash-threshold 0.8125 data (a 1 b 2 c 3))
+
+#+BEGIN_SRC emacs-lisp
+(gethash 'b h)
+#+END_SRC
+
+#+RESULTS:
+: 2
+
+#+BEGIN_SRC emacs-lisp
+(setq h (make-hash-table))
+(puthash 'a 1 h)
+(puthash 'b 2 h)
+(puthash 'c 3 h)
+
+(gethash 'b h)
+#+END_SRC
+
+#+RESULTS:
+: 2

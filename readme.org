@@ -1,0 +1,243 @@
+
+
+#+BEGIN_SRC emacs-lisp
+(get-qr-code "https://github.com/jkitchin/scimax" "scimax-qr-code.png")
+#+END_SRC
+
+#+RESULTS:
+: [[scimax-qr-code.png]]
+
+
+The scimax playlist: https://www.youtube.com/playlist?list=PL0sMmOaE_gs3E0OjExoI7vlCAVygj6S4I
+
+* DONE iteration https://www.youtube.com/watch?v=yUnEjAPxW5A&t=19s
+  CLOSED: [2021-10-02 Sat 10:29]
+
+* DONE functions https://www.youtube.com/watch?v=t-IsXzEz7hs&list=PL0sMmOaE_gs3E0OjExoI7vlCAVygj6S4I&index=3&t=49s
+  CLOSED: [2021-10-02 Sat 10:29]
+
+* DONE Formatting strings https://www.youtube.com/watch?v=kk2W9krvNVg&list=PL0sMmOaE_gs3E0OjExoI7vlCAVygj6S4I&index=1
+  CLOSED: [2021-10-02 Sat 10:29]
+
+* DONE editmarks https://www.youtube.com/watch?v=qBmvBkpzixs
+  CLOSED: [2021-10-02 Sat 10:30]
+
+* DONE data structures https://www.youtube.com/watch?v=HyFbIWvmV0A
+  CLOSED: [2021-10-02 Sat 11:57]
+
+[[./data-structures.org]]
+
+* TODO sequences
+
+** Strings
+
+#+BEGIN_SRC emacs-lisp
+(seq-elt "tree" 3)
+#+END_SRC
+
+#+RESULTS:
+: 101
+
+** lists
+
+** vectors
+
+** the seq library
+
+#+BEGIN_SRC emacs-lisp
+(seq-map-indexed (lambda (val i) (cons i val)) '(a b c))
+#+END_SRC
+
+#+RESULTS:
+: ((0 . a) (1 . b) (2 . c))
+
+
+#+BEGIN_SRC emacs-lisp
+(seq-reverse "abra")
+#+END_SRC
+
+#+RESULTS:
+: arba
+
+#+BEGIN_SRC emacs-lisp
+(let ((a [1 2 3]))
+  (aset a 0 21 )
+  (aref a 0))
+#+END_SRC
+
+#+RESULTS:
+: 21
+
+
+
+
+* sort
+
+* org-db
+
+* scimax-journal
+* scimax-notebook
+
+[[./../scimax-notebook.org]]
+
+
+* emacs-keybinding-command-tooltip-mode
+[[nb:scimax::emacs-keybinding-command-tooltip-mode.el::c98]]
+
+ `puthash'         
+
+  \\[puthash]       
+
+    `puthash'      
+
+elisp:emacs-keybinding-command-tooltip-mode                
+
+#+BEGIN_SRC emacs-lisp
+flyspell-generic-check-word-predicate
+#+END_SRC
+
+#+RESULTS:
+: org-mode-flyspell-verify
+
+"Function providing per-mode customization over which words are flyspelled.
+Returns t to continue checking, nil otherwise.
+Flyspell mode sets this variable to whatever is the `flyspell-mode-predicate'
+property of the major mode name."
+
+https://emacs.stackexchange.com/questions/20230/how-to-make-flyspell-ignore-code-blocks-in-markdown
+
+https://emacs.stackexchange.com/questions/5415/how-can-i-make-flyspell-ignore-urls
+
+#+BEGIN_SRC emacs-lisp
+(defun scimax-flyspell-verify ()
+  (let ((omv (org-mode-flyspell-verify))
+	(ekb (get-text-property (- (point) 2) 'emacs-keybinding-command))) 
+    ;(message "%s ekb %s omv %s" (save-excursion (backward-word) (thing-at-point 'word)) ekb omv)
+    (not ekb)))
+
+(setq flyspell-generic-check-word-predicate #'scimax-flyspell-verify)
+(put 'org-mode 'flyspell-mode-predicate  #'scimax-flyspell-verify)
+#+END_SRC
+
+#+RESULTS:
+: scimax-flyspell-verify
+#+BEGIN_SRC emacs-lisp
+(get 'org-mode 'flyspell-mode-predicate )
+#+END_SRC
+
+#+RESULTS:
+: scimax-flyspell-verify
+
+wrod 
+
+* spell-checking
+* let it be
+
+#+attr_org: :width 300
+[[././screenshots/2021-10-04:17:20:44.png]]
+#+BEGIN_SRC emacs-lisp
+(setq z 1
+      y 2)
+
+(+ y z)
+#+END_SRC
+
+#+RESULTS:
+: 3
+
+#+BEGIN_SRC emacs-lisp
+y
+#+END_SRC
+
+#+RESULTS:
+: 2
+
+#+BEGIN_SRC emacs-lisp
+(let ((a 1)
+      (b 2))
+  (+ a b))
+#+END_SRC
+
+#+RESULTS:
+: 3
+
+#+BEGIN_SRC emacs-lisp
+(let ((z 4))
+  (+ y z))
+#+END_SRC
+
+#+RESULTS:
+: 6
+
+#+BEGIN_SRC emacs-lisp
+(let* ((a 1)
+       (b (* 2 a)))
+  (+ a b))
+#+END_SRC
+
+#+RESULTS:
+: 3
+
+#+BEGIN_SRC emacs-lisp
+(let-alist '((a . 1)
+	     (b . 2))
+  (+ .a .b))
+#+END_SRC
+
+#+RESULTS:
+: 3
+
+#+BEGIN_SRC emacs-lisp
+(seq-let (a b) '(1 2) (+ a b))
+#+END_SRC
+
+#+RESULTS:
+: 3
+
+#+BEGIN_SRC emacs-lisp
+(pcase-let ((`(,a ,b)  '(1 2)))
+  (+ a b))
+#+END_SRC
+
+#+RESULTS:
+: 3
+
+#+BEGIN_SRC emacs-lisp
+b
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(let (a b)
+  (setq a 1
+	b 2)
+  (+ a b))
+  
+#+END_SRC
+
+#+RESULTS:
+: 3
+#+BEGIN_SRC emacs-lisp
+a
+#+END_SRC
+
+
+* elfeed
+
+
+https://github.com/skeeto/elfeed
+#+BEGIN_SRC emacs-lisp
+(elfeed-db-size)
+#+END_SRC
+
+#+RESULTS:
+: 71802
+
+
+#+BEGIN_SRC emacs-lisp
+(elfeed-search--count-unread)
+#+END_SRC
+
+#+RESULTS:
+: 0/0:0
+
+https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Scoring-elfeed-articles/
