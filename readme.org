@@ -71,15 +71,16 @@ The scimax playlist: https://www.youtube.com/playlist?list=PL0sMmOaE_gs3E0OjExoI
 
 
 
-* sort
+* TODO org-db
 
-* org-db
+* TODO scimax-journal
+* TODO scimax-notebook
 
-* scimax-journal
-* scimax-notebook
-
+[[././screenshots/2021-10-08:16:23:20.png]]
 [[./../scimax-notebook.org]]
 
+
+* sort
 
 * emacs-keybinding-command-tooltip-mode
 [[nb:scimax::emacs-keybinding-command-tooltip-mode.el::c98]]
@@ -130,8 +131,29 @@ https://emacs.stackexchange.com/questions/5415/how-can-i-make-flyspell-ignore-ur
 
 wrod 
 
-* spell-checking
-* let it be
+* spell-checking in scimax
+
+#+attr_org: :width 300
+[[././screenshots/2021-10-08:16:25:42.png]]
+Nobody likes typos. But who wants to slow down when typing?
+
+Every editor should have a good spellchecker. 
+
+My setup:
+
+C-; to correct the previous typo
+C-M-; to jump to and correct a typo
+s-M-; to get the hydra spell-checking hydra
+
+For typos I get tired of making, I can save the correction as an abbreviation. 
+
+An example is the. I misspell that a lot. the quick brown fox. 
+
+[[./../scimax-spellcheck.el]]  a bad word 
+
+
+* DONE let it be
+CLOSED: [2021-10-08 Fri 15:59]
 
 #+attr_org: :width 300
 [[././screenshots/2021-10-04:17:20:44.png]]
@@ -221,7 +243,8 @@ a
 #+END_SRC
 
 
-* elfeed
+* DONE elfeed
+CLOSED: [2021-10-08 Fri 15:59]
 
 
 https://github.com/skeeto/elfeed
@@ -241,3 +264,52 @@ https://github.com/skeeto/elfeed
 : 0/0:0
 
 https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Scoring-elfeed-articles/
+
+
+* words
+#+attr_org: :width 300
+[[././screenshots/2021-10-09:09:40:57.png]]
+In writing we use words all the time. Sometimes we need help understanding the words, finding better words, etc. In scimax, =words.el= provides a lot of tools for this.
+
+#+BEGIN_SRC emacs-lisp
+(use-package words
+  :load-path scimax-dir  ;; scimax-dir is a variable in scimax
+  :bind ("H-w" . words-hydra/body))
+#+END_SRC
+
+#+RESULTS:
+: words-hydra/body
+
+- onomatopoeia
+  - dictionary
+
+- reveal
+  - thesaurus
+
+- grammar
+
+Hiw many mistakes can I fit in one phraze?
+
+LanguageTool is your intelligent writing assistant for all common browsers and word processors. Write or paste your text here too have it checked continuously. Errors will be underlined in different colours: we will mark seplling errors with red underilnes. Furthermore grammar error's are highlighted in yellow. LanguageTool also marks style issues in a reliable manner by underlining them in blue. did you know that you can sea synonyms by double clicking a word? Its a impressively versatile tool, e.g. if youd like to tell a colleague from over sea's about what happened at 5 PM in the afternoon on Monday, 27 May 2007.
+
+
+
+
+** Searching 
+
+- scimax kitchin
+  - Google
+  - Twitter
+- Kitchin, J. R. (2015). Examples of effective data sharing in scientific publishing. ACS Catalysis, 5(6), 3894–3899.
+  - crossref
+  - bibtex
+
+- kitchin geometry optimization
+  - arxiv
+  - Finder
+  - swiper-all
+
+
+** Speaking and translation
+
+Examples of effective data sharing in scientific publishing.
