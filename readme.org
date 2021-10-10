@@ -266,7 +266,8 @@ https://github.com/skeeto/elfeed
 https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Scoring-elfeed-articles/
 
 
-* words
+* DONE words
+CLOSED: [2021-10-10 Sun 11:58]
 #+attr_org: :width 300
 [[././screenshots/2021-10-09:09:40:57.png]]
 In writing we use words all the time. Sometimes we need help understanding the words, finding better words, etc. In scimax, =words.el= provides a lot of tools for this.
@@ -313,3 +314,139 @@ LanguageTool is your intelligent writing assistant for all common browsers and w
 ** Speaking and translation
 
 Examples of effective data sharing in scientific publishing.
+
+
+* DONE Auto-formatting, abbreviations and snippets in scimax
+CLOSED: [2021-10-10 Sun 15:55]
+
+#+attr_org: :width 400
+[[/Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/screenshots/autoformat.png]]
+
+
+#+BEGIN_SRC emacs-lisp
+(require 'scimax-autoformat-abbrev)
+#+END_SRC
+
+** Autoformatting
+
+elisp:scimax-autoformat-mode
+
+- Ordinals 1^{st} 2^{nd} 3^{rd} 
+- Fractions ½ ¼ 1/3 ¾ 
+- transposed caps  Chip
+- superscripts m^{2} n^{4} 
+- sentence capitalization. Automatically get cap. 
+
+#+BEGIN_SRC emacs-lisp
+(setq  scimax-autoformat-sentence-capitalization nil)
+#+END_SRC
+
+#+RESULTS:
+
+
+** Abbreviations
+
+elisp:scimax-abbrev-mode
+
+- Months Mar. March Jan. 
+- days Mon. Tuesday 
+- contractions do not are not 
+- common transpositions the 
+- some chemical formulas H_{2}O CH_{4} N_{2} 
+- miscellaneous Abbreviations Å °C °F ™ Schrödinger 
+
+#+BEGIN_SRC emacs-lisp
+scimax-misc-abbreviations
+#+END_SRC
+
+#+RESULTS:
+| degC        | °C          |
+| degF        | °F          |
+| ang         | Å           |
+| tm          | ™           |
+| norskov     | Nørskov     |
+| schrodinger | Schrödinger |
+
+** Yasnippets
+
+elisp:ivy-Yasnippet
+
+*** simple templates that are just text
+
+#+BEGIN_SRC jupyter-python
+import numpy as np
+import matplotlib.pyplot as plt
+plt.xlabel()
+plt.legend()
+#+END_SRC
+
+*** Mostly text templates with some user input
+
+#+BEGIN_SRC jupyter-python
+plt.xlabel('x')
+#+END_SRC
+
+*** templates that look up choices
+
+bibliography:~/Dropbox/emacs/bibliography/references.bib
+
+bibliographystyle:unsrt
+
+*** Templates that calculate things
+
+ksr
+
+
+** skeletons
+
+A builtin templating solution is the skeleton library in Emacs. Defining a skeleton creates a command you can call with M-x.
+
+#+BEGIN_SRC emacs-lisp
+(define-skeleton memo
+  "CMU memo template"
+  nil
+  "#+LATEX_CLASS: cmu-memo
+,#+CC:
+,#+DEPARTMENT: Department of Chemical Engineering
+,#+FROM: John Kitchin
+,#+FROMNAME: John Kitchin
+,#+SIGNATURE-LINES: nil
+,#+SUBJECT: "_"
+,#+TO: "@"
+,#+latex_header: \\usepackage{setspace}
+,#+latex_header: \\doublespacing
+
+Sincerely,\\\\
+\\\\
+\\\\
+\\\\
+John Kitchin
+
+,* build :noexport:
+[[elisp:(cmu-memo-export-to-pdf-and-open)]]
+")
+#+END_SRC
+
+#+LATEX_CLASS: cmu-memo
+#+CC:
+#+DEPARTMENT: Department of Chemical Engineering
+#+FROM: John Kitchin
+#+FROMNAME: John Kitchin
+#+SIGNATURE-LINES: nil
+#+SUBJECT: 
+#+TO: 
+#+latex_header: \usepackage{setspace}
+#+latex_header: \doublespacing
+
+Sincerely,\\
+\\
+\\
+\\
+John Kitchin
+
+* build :noexport:
+[[elisp:(cmu-memo-export-to-pdf-and-open)]]
+
+** Behind the scenes
+
+[[./../scimax-autoformat-abbrev.el]]
