@@ -1,0 +1,7 @@
+#+title: Scimax notebooks
+
+This links to the readme: [[./readme.org]]
+
+This links to the readme to a specific heading: [[./readme.org::*scimax-notebook]]
+
+[[nb:scimax::scimax-notebook.org::c1]] 

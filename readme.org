@@ -27,111 +27,8 @@ The scimax playlist: https://www.youtube.com/playlist?list=PL0sMmOaE_gs3E0OjExoI
 
 [[./data-structures.org]]
 
-* TODO sequences
-
-** Strings
-
-#+BEGIN_SRC emacs-lisp
-(seq-elt "tree" 3)
-#+END_SRC
-
-#+RESULTS:
-: 101
-
-** lists
-
-** vectors
-
-** the seq library
-
-#+BEGIN_SRC emacs-lisp
-(seq-map-indexed (lambda (val i) (cons i val)) '(a b c))
-#+END_SRC
-
-#+RESULTS:
-: ((0 . a) (1 . b) (2 . c))
-
-
-#+BEGIN_SRC emacs-lisp
-(seq-reverse "abra")
-#+END_SRC
-
-#+RESULTS:
-: arba
-
-#+BEGIN_SRC emacs-lisp
-(let ((a [1 2 3]))
-  (aset a 0 21 )
-  (aref a 0))
-#+END_SRC
-
-#+RESULTS:
-: 21
-
-
-
-
-* TODO org-db
-
-* TODO scimax-journal
-* TODO scimax-notebook
-
-[[././screenshots/2021-10-08:16:23:20.png]]
-[[./../scimax-notebook.org]]
-
-
-* sort
-
-* emacs-keybinding-command-tooltip-mode
-[[nb:scimax::emacs-keybinding-command-tooltip-mode.el::c98]]
-
- `puthash'         
-
-  \\[puthash]       
-
-    `puthash'      
-
-elisp:emacs-keybinding-command-tooltip-mode                
-
-#+BEGIN_SRC emacs-lisp
-flyspell-generic-check-word-predicate
-#+END_SRC
-
-#+RESULTS:
-: org-mode-flyspell-verify
-
-"Function providing per-mode customization over which words are flyspelled.
-Returns t to continue checking, nil otherwise.
-Flyspell mode sets this variable to whatever is the `flyspell-mode-predicate'
-property of the major mode name."
-
-https://emacs.stackexchange.com/questions/20230/how-to-make-flyspell-ignore-code-blocks-in-markdown
-
-https://emacs.stackexchange.com/questions/5415/how-can-i-make-flyspell-ignore-urls
-
-#+BEGIN_SRC emacs-lisp
-(defun scimax-flyspell-verify ()
-  (let ((omv (org-mode-flyspell-verify))
-	(ekb (get-text-property (- (point) 2) 'emacs-keybinding-command))) 
-    ;(message "%s ekb %s omv %s" (save-excursion (backward-word) (thing-at-point 'word)) ekb omv)
-    (not ekb)))
-
-(setq flyspell-generic-check-word-predicate #'scimax-flyspell-verify)
-(put 'org-mode 'flyspell-mode-predicate  #'scimax-flyspell-verify)
-#+END_SRC
-
-#+RESULTS:
-: scimax-flyspell-verify
-#+BEGIN_SRC emacs-lisp
-(get 'org-mode 'flyspell-mode-predicate )
-#+END_SRC
-
-#+RESULTS:
-: scimax-flyspell-verify
-
-wrod 
-
-* spell-checking in scimax
+* DONE spell-checking in scimax
+CLOSED: [2021-10-11 Mon 07:52]
 
 #+attr_org: :width 300
 [[././screenshots/2021-10-08:16:25:42.png]]
@@ -427,26 +324,328 @@ John Kitchin
 ")
 #+END_SRC
 
-#+LATEX_CLASS: cmu-memo
-#+CC:
-#+DEPARTMENT: Department of Chemical Engineering
-#+FROM: John Kitchin
-#+FROMNAME: John Kitchin
-#+SIGNATURE-LINES: nil
-#+SUBJECT: 
-#+TO: 
-#+latex_header: \usepackage{setspace}
-#+latex_header: \doublespacing
 
-Sincerely,\\
-\\
-\\
-\\
-John Kitchin
-
-* build :noexport:
-[[elisp:(cmu-memo-export-to-pdf-and-open)]]
 
 ** Behind the scenes
 
 [[./../scimax-autoformat-abbrev.el]]
+
+* DONE screenshot, tesseract, pngpaste and ox-clip
+CLOSED: [2021-10-11 Mon 11:51]
+#+attr_org: :width 600
+[[/Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/screenshots/screenshot-pngpaste.png]]
+
+When taking notes, it is often helpful to capture images of things on your screen.
+
+
+#+attr_org: :width 200
+[[./screenshots/date-11-10-2021-time-11-39-21.png]]
+
+Tesseract Open Source OCR Engine v4.1.1 with Leptonica
+Registration Link:
+https://bit.ly/cmucheme-graduateinfosession
+
+
+[[././screenshots/date-11-10-2021-time-11-40-27.png]]
+
+#+attr_org: :width 800
+[[././screenshots/2021-10-11:11:41:38.png]]
+
+ $\int_0^1 e^x dx$
+
+
+
+* DONE scimax-journal
+CLOSED: [2021-10-12 Tue 12:01]
+
+#+attr_org: :width 600
+[[/Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/screenshots/journal.png]]
+
+I take notes in org-mode almost every day. =scimax-journal= helps me do that, and makes my notes searchable and easy to access.
+
+- Navigation of the journal
+  - new entries
+  - open entry at date
+  - open file in the journal
+  - open heading in the journal
+  - next/previous entries
+
+- Searching (including in time interval)
+  - swiper
+  - grep/ag
+  - agenda-style searching
+
+- project-local journals   [[./journal/]]
+
+[[./../scimax-journal.el]]
+
+#+BEGIN_SRC emacs-lisp
+(scimax-journal-describe)
+#+END_SRC
+
+#+RESULTS:
+: current-directory: /Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/
+: 
+: scimax-journal-root-dir: /Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/journal/
+: cache-file: /Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/journal/.scimax-journal-cache
+: 
+: Number of entries: 2
+: first-entry: /Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/journal/2021/10/12/2021-10-12.org
+: last-entry: /Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/journal/2021/10/14/2021-10-14.org
+
+* TODO scimax-notebook
+
+Electronic notebooks are crucial (IMO) for scientific research. They should let you create interactive, executable documents that are hyperlinked together, and that you can easily search and extract data from.
+
+=scimax-notebook= is a library to help you create and open project notebooks, find files, and search files in the project, get project specific agendas, store links to places in a project, etc.
+
+[[././screenshots/2021-10-08:16:23:20.png]]
+[[./../scimax-notebook.org]]
+
+
+* TODO org-db
+
+Searching for things in my collection of org-files is a very common activity for me. =scimax= has a library called =org-db=, =org-db-images= and =org-db-full-text= for this. Every org-file is indexed and the results are stored in a SQLITE database for future queries.
+
+This allows me to search for content in every org-file that has ever been indexed with a variety of scopes
+
+** headlines
+
+I use this the most often. I can search for headlines that match text patterns, including the TODO state and tags.
+
+ elisp:org-db-headings
+
+** contacts
+
+A contact is a heading with an EMAIL property. These are saved in a special table as an address book.
+
+elisp:org-db-contacts
+
+** locations
+
+A location is a heading with an ADDRESS property. These are saved in a special table for lookup.
+
+elisp:org-db-locations
+
+** files
+
+This table lists all the files in the database.
+
+elisp:org-db-files
+
+** recentf
+
+This search sorts the files in the database by most recently modified.
+
+elisp:org-db-recentf
+
+** links
+
+This table stores every link in every org-file. You can use it to find all org-files with an org-ref cite for example.
+
+elisp:org-db-links
+
+** backlinks
+
+These are links in other files that point back to the current file.
+
+elisp:org-db-backlinks
+
+** @-labels
+
+An @-label is a way to label a person, or thing, e.g. @johnkitchin.
+
+[[elisp:org-db-@]]
+
+** hashtags
+
+Hashtags are complementary to org-tags (which only go with headings). #orgdb allows me to tag a position in a buffer with a word.
+
+elisp:org-db-hashtags
+
+** properties
+
+elisp:org-db-properties
+
+** editmarks
+
+I keep a table that stores the types and content of any editmarks.
+
+elisp:org-db-editmarks
+
+** email-addresses
+
+This search finds email addresses that are embedded in text
+
+elisp:org-db-email-addresses
+
+** src-blocks
+
+This table stores the language and contents of src-blocks so you can search them.
+
+elisp:org-db-src-blocks
+
+** images
+
+All images in org-files are piped through tesseract and the OCR text is stored in a database for searching.
+
+elisp:org-db-images
+
+
+
+#+attr_org: :width 600
+[[./screenshots/date-12-10-2021-time-07-56-06.png]]
+
+
+
+** full-text
+
+Finally, the full-text of each file is indexed into a full-text searchable table
+
+elisp:org-db-fulltext-search 
+
+** The hydra
+
+No, I don't remember all the commands, so, of course, there is a hydra menu.
+
+elisp:org-db/body
+
+** Limitations
+
+- The db is updated after you save or close a buffer
+- You cannot edit files outside of Emacs (including deleting them, or moving them)
+- It is not multi-user, so if someone else edits a file those changes won't be in your db.
+
+    
+
+* search - jumping to locations
+
+One element of search is being able to jump to locations quickly.
+
+- Positions in the buffer
+  - beginning/end of buffer
+  - beginning/end of line
+  - a specific line
+  - a char/word/sentence/paragraph
+  - a link/heading
+  - a symbol
+- A buffer
+- A window
+- A recent file
+
+- in "org"
+  - an agenda heading
+  - a (visible or inline) block
+  - heading
+    - visible headline
+    - in file
+    - in open buffer
+    - in directory
+    - in project
+
+
+elisp:scimax-jump/body
+
+
+[[nb:scimax::scimax-hydra.el::c12360]]
+
+
+* emacs-keybinding-command-tooltip-mode
+[[nb:scimax::emacs-keybinding-command-tooltip-mode.el::c98]]
+
+ `puthash'         
+
+  \\[puthash]       
+
+    `puthash'      
+
+elisp:emacs-keybinding-command-tooltip-mode                
+
+#+BEGIN_SRC emacs-lisp
+flyspell-generic-check-word-predicate
+#+END_SRC
+
+#+RESULTS:
+: org-mode-flyspell-verify
+
+"Function providing per-mode customization over which words are flyspelled.
+Returns t to continue checking, nil otherwise.
+Flyspell mode sets this variable to whatever is the `flyspell-mode-predicate'
+property of the major mode name."
+
+https://emacs.stackexchange.com/questions/20230/how-to-make-flyspell-ignore-code-blocks-in-markdown
+
+https://emacs.stackexchange.com/questions/5415/how-can-i-make-flyspell-ignore-urls
+
+#+BEGIN_SRC emacs-lisp
+(defun scimax-flyspell-verify ()
+  (let ((omv (org-mode-flyspell-verify))
+	(ekb (get-text-property (- (point) 2) 'emacs-keybinding-command))) 
+    ;(message "%s ekb %s omv %s" (save-excursion (backward-word) (thing-at-point 'word)) ekb omv)
+    (not ekb)))
+
+(setq flyspell-generic-check-word-predicate #'scimax-flyspell-verify)
+(put 'org-mode 'flyspell-mode-predicate  #'scimax-flyspell-verify)
+#+END_SRC
+
+#+RESULTS:
+: scimax-flyspell-verify
+#+BEGIN_SRC emacs-lisp
+(get 'org-mode 'flyspell-mode-predicate )
+#+END_SRC
+
+#+RESULTS:
+: scimax-flyspell-verify
+
+wrod 
+
+
+
+
+* programming topics
+** TODO sequences
+
+*** Strings
+
+#+BEGIN_SRC emacs-lisp
+(seq-elt "tree" 3)
+#+END_SRC
+
+#+RESULTS:
+: 101
+
+*** lists
+
+*** vectors
+
+*** the seq library
+
+#+BEGIN_SRC emacs-lisp
+(seq-map-indexed (lambda (val i) (cons i val)) '(a b c))
+#+END_SRC
+
+#+RESULTS:
+: ((0 . a) (1 . b) (2 . c))
+
+
+#+BEGIN_SRC emacs-lisp
+(seq-reverse "abra")
+#+END_SRC
+
+#+RESULTS:
+: arba
+
+#+BEGIN_SRC emacs-lisp
+(let ((a [1 2 3]))
+  (aset a 0 21 )
+  (aref a 0))
+#+END_SRC
+
+#+RESULTS:
+: 21
+
+** TODO sorting?
+** shell-command, shell-command-to-string
+** ivy?
+
+did I already do this? is there something to add?
