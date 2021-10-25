@@ -1,0 +1,13 @@
+#+title: org-ref and refproc
+#+attr_org: :width 400
+[[/Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/screenshots/org-ref-refproc.png]]
+
+Cross-references in LaTeX are awesome. You can reference names, pages, and with autoref/cleveref even automatically insert prefix text like Figure or Table, including plurality, with mixed types.
+
+org-ref now provides this kind of support for non-LaTeX exports! This works with a preprocessing hook that replaces the links with org-syntax including the prefix text.
+
+
+[[./../org-ref/examples/refproc.org]]
+
+
+The refproc code [[./../org-ref/org-ref-refproc.el]]

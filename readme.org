@@ -1,3 +1,4 @@
+#+title: scimax Youtube channel videos
 
 
 #+BEGIN_SRC emacs-lisp
@@ -18,6 +19,8 @@ The scimax playlist: https://www.youtube.com/playlist?list=PL0sMmOaE_gs3E0OjExoI
 
 * DONE Formatting strings https://www.youtube.com/watch?v=kk2W9krvNVg&list=PL0sMmOaE_gs3E0OjExoI7vlCAVygj6S4I&index=1
   CLOSED: [2021-10-02 Sat 10:29]
+#+attr_org: :width 800
+[[/Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/screenshots/formatting-strings.png]]
 
 * DONE editmarks https://www.youtube.com/watch?v=qBmvBkpzixs
   CLOSED: [2021-10-02 Sat 10:30]
@@ -393,21 +396,73 @@ I take notes in org-mode almost every day. =scimax-journal= helps me do that, an
 : first-entry: /Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/journal/2021/10/12/2021-10-12.org
 : last-entry: /Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/journal/2021/10/14/2021-10-14.org
 
-* TODO scimax-notebook
+* DONE scimax-notebook                                              
+CLOSED: [2021-10-13 Wed 13:48]
 
 Electronic notebooks are crucial (IMO) for scientific research. They should let you create interactive, executable documents that are hyperlinked together, and that you can easily search and extract data from.
 
 =scimax-notebook= is a library to help you create and open project notebooks, find files, and search files in the project, get project specific agendas, store links to places in a project, etc.
 
+#+attr_org: :width 300
 [[././screenshots/2021-10-08:16:23:20.png]]
+
+- New / open a notebook (project)
+- search for things in the notebook
+- get agenda for the notebook
+- consistent tagging
+- cross-machine links to notebooks  [[nb:scimax-channel::readme.org::c8834]]
+- contacts in a notebook
+
+#+BEGIN_SRC emacs-lisp
+(nb-search-agenda nil "journal")e
+#+END_SRC
+
+** participants
+*** John Kitchin
+:PROPERTIES:
+:EMAIL:    jkitchin@andrew.cmu.edu
+:END:
+
 [[./../scimax-notebook.org]]
 
 
-* TODO org-db
+
+
+
+
+
+*** person1
+:PROPERTIES:
+:EMAIL:    person1@test.org
+:END:
+
+
+
+** DONE task to be done
+CLOSED: [2021-10-13 Wed 13:48] DEADLINE: <2021-10-15 Fri>
+:PROPERTIES:
+:ASSIGNEDTO: jkitchin@andrew.cmu.edu
+:END:
+
+
+
+
+** title / description
+
+scimax - electronic notebook in #Emacs with #orgmode
+
+Electronic notebooks are crucial in a digital world where almost everything is done with a computer. I created scimax-notebook to support my needs in an electronic notebook, including things like creating and opening notebooks, searching notebooks, and linking to notebooks. In this video I walk through how I use notebooks, what some of the features of scimax-notebook are, and walk through the code that implements it. This library is developed in a literate programming style using org-mode. 
+
+You can find the library at https://github.com/jkitchin/scimax/blob/master/scimax-notebook.org.
+
+* DONE scimax - org-db: searching for things in your org-files
+CLOSED: [2021-10-14 Thu 13:43]
+#+attr_org: :width 672
+[[/Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/screenshots/org-db.png]]
 
 Searching for things in my collection of org-files is a very common activity for me. =scimax= has a library called =org-db=, =org-db-images= and =org-db-full-text= for this. Every org-file is indexed and the results are stored in a SQLITE database for future queries.
 
-This allows me to search for content in every org-file that has ever been indexed with a variety of scopes
+This allows me to search for content in every org-file that has ever been indexed with a variety of scopes.
 
 ** headlines
 
@@ -417,7 +472,7 @@ I use this the most often. I can search for headlines that match text patterns, 
 
 ** contacts
 
-A contact is a heading with an EMAIL property. These are saved in a special table as an address book.
+A contact is a heading with an EMAIL property. These are saved in a special table for use as an address book.
 
 elisp:org-db-contacts
 
@@ -463,6 +518,7 @@ Hashtags are complementary to org-tags (which only go with headings). #orgdb all
 
 elisp:org-db-hashtags
 
+elisp:org-db-target   <<orgdb>>
 ** properties
 
 elisp:org-db-properties
@@ -470,6 +526,7 @@ elisp:org-db-properties
 ** editmarks
 
 I keep a table that stores the types and content of any editmarks.
+{>~ @jk this is comment~<}
 
 elisp:org-db-editmarks
 
@@ -490,7 +547,6 @@ elisp:org-db-src-blocks
 All images in org-files are piped through tesseract and the OCR text is stored in a database for searching.
 
 elisp:org-db-images
-
 
 
 #+attr_org: :width 600
@@ -518,7 +574,10 @@ elisp:org-db/body
 
     
 
-* search - jumping to locations
+* DONE search - jumping to locations
+CLOSED: [2021-10-16 Sat 10:11]
+#+attr_org: :width 400
+[[/Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/screenshots/jump.png]]
 
 One element of search is being able to jump to locations quickly.
 
@@ -543,12 +602,37 @@ One element of search is being able to jump to locations quickly.
     - in directory
     - in project
 
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Donec hendrerit tempor tellus.  Donec pretium posuere tellus.  Proin quam nisl, tincidunt et, mattis eget, convallis nec, purus.  Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.  Nulla posuere.  Donec vitae dolor.  Nullam tristique diam non turpis.  Cras placerat accumsan nulla.  Nullam rutrum.  Nam vestibulum accumsan nisl.
+
+** sub1
+
+#+BEGIN_SRC emacs-lisp
+(+ 3 3)
+#+END_SRC
+
 
 elisp:scimax-jump/body
 
 
 [[nb:scimax::scimax-hydra.el::c12360]]
 
+** sub 2
+
+|     |   |   |
+| 1 2 | 3 | 4 |
+|   5 | 6 | 7 |
+
+#+BEGIN_SRC emacs-lisp
+    (avy-process positions)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+(avy-process (org-element-map (org-element-parse-buffer) 'table-cell
+	       (lambda (tc) (org-element-property :begin tc))))
+#+END_SRC
+
+#+RESULTS:
+| 14135 | 14141 | 14145 | 14151 | 14157 | 14161 | 14167 | 14173 | 14177 |
 
 * emacs-keybinding-command-tooltip-mode
 [[nb:scimax::emacs-keybinding-command-tooltip-mode.el::c98]]
@@ -649,3 +733,22 @@ wrod
 ** ivy?
 
 did I already do this? is there something to add?
+
+** lispy
+
+# Local Variables:
+# eval: (sem-mode)
+# End:
+
+
+* TODO org-ref
+
+- [X]  [[./org-ref-overview.org]]
+- [X] [[./org-ref-csl.org]]
+- [X] [[./org-ref-refproc.org]]
+- [[./org-ref-natmove.org]]
+- [[./org-ref-bbl.org]]
+
+* ivy
+
+[[./ivy-intro.org]]

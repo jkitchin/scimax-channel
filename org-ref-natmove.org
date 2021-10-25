@@ -1,0 +1,26 @@
+#+title: org-ref and natmove for non-LaTeX export
+
+#+attr_org: :width 400
+[[/Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/screenshots/org-ref-natmove.png]]
+
+A hill I will probably die on is that citations belong in the sentence they are used in, i.e. on the left hand side of punctuation. For superscripted citations, though, I agree that they look better on the right side, and that it is not ambiguous in that case what the belong to. 
+
+It is convenient to be able to move citations to the right place when you need to, e.g. at publication time. In LaTeX there is a natmove package that does this for you so you can put the citations in the sentence while writing, but move them when building the PDF.
+
+org-ref now supports this in export via a new preprocessing function.
+
+[[nb:org-ref::examples/natmove-example.org::c1]]
+
+The natmove code: [[nb:org-ref::org-ref-citation-links.el::c36716]]
+
+** refproc (take 2)
+
+Cross-references in LaTeX are awesome. You can reference names, pages, and with autoref/cleveref even automatically insert prefix text like Figure or Table, including plurality, with mixed types.
+
+org-ref now provides this kind of support for non-LaTeX exports! This works with a preprocessing hook that replaces the links with org-syntax including the prefix text.
+
+
+[[./../org-ref/examples/refproc.org]]
+
+
+The refproc code [[./../org-ref/org-ref-refproc.el]]

@@ -1,0 +1,14 @@
+#+title: org-ref and CSL for non-LaTeX exports
+
+#+attr_org: :width 400
+[[/Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/screenshots/org-ref-csl.png]]
+
+org-ref has switched to CSL for non-LaTeX exports. This works via a pre-processor that replaces the citations and bibliography with org text derived from citeproc.
+
+Get styles at https://www.zotero.org/styles.
+
+- [[nb:org-ref::examples/basic-defaults-csl.org::c1]]
+- [[nb:org-ref::examples/basic-csl.org::c1]]
+- [[nb:org-ref::examples/basic-csl-path.org::c1]]
+- 
+The exporter code: [[./../org-ref/org-ref-export.el]]

@@ -1,0 +1,81 @@
+#+title: Acronyms, glossaries and indexes in org-ref
+
+#+attr_org: :width 600
+[[/Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/screenshots/org-ref-tls-gloss.png]]
+
+
+Acronyms, like TLA, are common in technical writing. Technical terms with special meanings are also common, and it is typical to provide a glossary for them. It is also common to provide an index to help people find things in a document. org-ref provides support to manage acronyms and glossaries, especially for export to PDF via LaTeX.
+
+The main idea is to define these tables (they will not show up in the final document):
+
+[[index:acronym]]
+#+name: acronyms
+| label | abbreviation | full form            |
+|-------+--------------+----------------------|
+| tla   | TLA          | three letter acronym |
+
+[[index:glossary]]
+#+name: glossary
+| label | term    | definition                |
+|-------+---------+---------------------------|
+| html  | HTML    | hypertext markup language |
+| fb    | floobit | Singular form of floobits |
+
+
+Then you have a variety of ways to insert links to them. The first time you use an acronym, you might use the acrfull type [[acrfull:tla][three letter acronym (TLA)]] but after that you can refer to the acrshort version [[acrshort:tla][TLA]]. index:acronym 
+
+[[acrfull:tla][three letter acronym (TLA)]], [[acrshortpl:tla][TLAs]]
+
+For glossary references, you put links in that simply point to the entry [[gls:html][HTML]]. [[Glspl:fb][Floobits]] are commonly used.
+
+Don't forget to put a printglossaries link in where you want to see them. 
+
+
+[[printglossaries:]]
+
+[[printindex:]]
+
+* build                                                            :noexport:
+
+** LaTeX - aka the Gold standard
+
+#+latex_header: \usepackage{glossaries}
+#+latex_header: \makeglossaries
+#+latex_header: \usepackage{makeidx}
+#+latex_header: \makeindex
+
+#+BEGIN_SRC emacs-lisp :results silent
+(delete-file "org-ref-tla-gloss.pdf")
+(let ((org-export-before-parsing-hook '(org-ref-glossary-before-parsing
+					org-ref-acronyms-before-parsing))
+      (org-latex-pdf-process
+       '("pdflatex -interaction nonstopmode -output-directory %o %f"
+	 "bibtex %b"
+	 "makeglossaries %b"
+	 "makeindex %b"
+	 "pdflatex -interaction nonstopmode -output-directory %o %f"
+	 "pdflatex -interaction nonstopmode -output-directory %o %f")))
+  (org-open-file (org-latex-export-to-pdf)))
+#+END_SRC
+
+** Other formats
+
+#+BEGIN_SRC emacs-lisp :results silent
+(let ((org-export-before-parsing-hook '(org-ref-acrossproc  org-ref-idxproc)))
+  (org-org-export-as-org))
+#+END_SRC
+
+*** HTML
+
+#+BEGIN_SRC emacs-lisp :results silent
+(let ((org-export-before-parsing-hook '(org-ref-acrossproc org-ref-idxproc)))
+  (org-open-file (org-html-export-to-html)))
+#+END_SRC
+
+*** Word (docx)
+
+#+BEGIN_SRC emacs-lisp :results silent
+(require 'ox-pandoc)
+(let ((org-export-before-parsing-hook '(org-ref-acrossproc org-ref-idxproc)))
+  (org-open-file (plist-get (org-pandoc-export-to-docx) 'output-file) 'system))
+#+END_SRC

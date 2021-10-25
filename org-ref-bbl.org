@@ -1,0 +1,22 @@
+#+title: The bbl preprocessor in org-ref
+
+#+attr_org: :width 600
+[[/Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/screenshots/org-ref-bbl-citeproc.png]]
+
+With org-ref you have a lot of options for processing citations:
+
+1. LaTeX is the single best, most powerful processor when your output is a PDF.
+
+2. CSL is pretty good for non-PDF outputs, e.g. HTML, plain text, and ODF. You do have to find an appropriate CSL style, and install the citeproc library.
+
+An alternative to CSL is the bbl preprocessor in org-ref. This does not require you to have citeproc installed, and leverages the bbl file made from bibtex. Formatting is done with latex_header lines like you would for LaTeX.
+
+3. org-ref provides a natbib-based pre-processor that leverages LaTeX for citation processing to other formats.
+
+
+
+- superscripts :: [[nb:org-ref::examples/bbl-super.org::c1]]
+- numbers :: [[nb:org-ref::examples/bbl-numbers.org::c1]]
+- authoryear :: [[nb:org-ref::examples/bbl-authoryear.org::c1]]
+
+[[./../org-ref/org-ref-natbib-bbl-citeproc.el]]
