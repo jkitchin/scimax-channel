@@ -1,0 +1,58 @@
+#+title: org-ref and DOI utils (aka show me that bibtex!)
+
+#+attr_org: :width 400
+[[/Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/screenshots/org-ref-doi-utils.png]]
+
+
+
+#+BEGIN_SRC emacs-lisp
+(setq bibtex-completion-library-path
+      (expand-file-name "pdfs/"))
+#+END_SRC
+
+#+RESULTS:
+: /Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/pdfs/
+
+* Add bibtex entries by DOI
+
+M-x  doi-add-bibtex-entry  to convert a DOI to a bibtex entry
+
+  #+BEGIN_SRC emacs-lisp
+( doi-utils-debug "10.1021/acscatal.5b00538")
+  #+END_SRC
+
+
+* Add bibtex entries by crossref
+
+M-x crossref-add-bibtex-entry 
+
+Kitchin, J. R., Van Gulick, A. E., & Zilinski, L. D. (2017). Automating Data Sharing Through Authoring Tools. International Journal on Digital Libraries, 18(2), 93–98. 
+
+* Add bibtex entries from arxiv
+
+M-x arxiv-add-bibtex-entry
+
+https://arxiv.org/abs/2110.13026
+[[cite:&darby-2018-lonel-atoms;&dubrovin-2021-incip-geomet]]
+
+* org-ref-bibtex - navigate, edit, act on your entries
+
+In your bibtex file:
+
+M-x org-ref-bibtex-hydra/body  (H-b)
+
+* Need to modify all your entries?
+
+#+BEGIN_SRC emacs-lisp
+(with-current-buffer
+    (find-file-noselect "doi-demo.bib")
+  (bibtex-map-entries 'org-ref-title-case-article)
+  (save-buffer))
+#+END_SRC
+
+#+RESULTS:
+
+
+bibliography:doi-demo.bib
+
+
