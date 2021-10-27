@@ -1,0 +1,227 @@
+#+title: Completion with ivy
+#+attr_org: :width 600
+[[/Users/jkitchin/Dropbox/emacs/scimax/scimax-channel/screenshots/scimax-ivy.png]]
+
+In all of this, I assume you use ivy-mode. That redefines completing-read to use ivy functions instead.
+
+
+* Vanilla usage
+
+[[elisp:(ivy-mode -1)]]
+
+bibliography:ivy.bib
+
+#+BEGIN_SRC emacs-lisp :results code
+(org-ref-valid-keys) 
+#+END_SRC
+
+#+RESULTS:
+#+begin_src emacs-lisp
+("himanen-2018-mater-struc" "wang-2018-overc-site" "darby-2018-lonel-atoms" "gastegger-2018-wacsf-weigh" "schuett-2018-schnet")
+#+end_src
+
+#+BEGIN_SRC emacs-lisp
+(format "[[cite:&%s]]" (completing-read "choose: " (org-ref-valid-keys)))
+#+END_SRC
+
+#+RESULTS:
+: [[cite:&gastegger-2018-wacsf-weigh]]
+
+Anywhere you use completing read, you can use ivy-read. Here we explore how to use ivy, and what it offers.
+
+elisp:ivy-mode
+
+
+#+BEGIN_SRC emacs-lisp
+(ivy-read "choose: " (org-ref-valid-keys))
+#+END_SRC
+
+#+RESULTS:
+: gastegger-2018-wacsf-weigh
+
+
+
+Things get really good with an action [[cite:&darby-2018-lonel-atoms]]
+
+#+BEGIN_SRC emacs-lisp
+(ivy-read "choose: " (org-ref-valid-keys)
+	  :action (lambda (x) (insert (format "[[cite:&%s]]" x))))
+
+#+END_SRC
+
+#+RESULTS:
+: darby-2018-lonel-atoms
+
+
+#+BEGIN_SRC emacs-lisp :results silent
+(ivy-read "choose: " (org-ref-valid-keys)
+	  :action (lambda (x) (bibtex-completion-show-entry (list x))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+(bibtex-completion-show-entry (list (ivy-read "choose: " (org-ref-valid-keys))))
+#+END_SRC
+
+
+#+RESULTS:
+: Vanilla usage
+
+And even better when there are multiple possible actions.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(ivy-read "choose: " (org-ref-valid-keys)
+	  :action '(1
+		    ("o" (lambda (x)
+			   (bibtex-completion-show-entry (list x)))
+		     "open entry")
+		    ("e" (lambda (x)
+			   (bibtex-completion-edit-notes (list x)))
+		     "edit notes")))
+#+END_SRC
+
+* Annotating the entries the traditional way
+
+#+BEGIN_SRC emacs-lisp
+(bibtex-completion-apa-format-reference "xiao-2006-size-effec")
+#+END_SRC
+
+#+RESULTS:
+: Xiao, S., Hu, W., Luo, W., Wu, Y., Li, X., & Deng, H. (2006). Size effect on alloying ability and phase stability of immiscible bimetallic nanoparticles. The European Physical Journal B, 54(4), 479–484. http://dx.doi.org/10.1140/epjb/e2007-00018-6
+
+
+#+BEGIN_SRC emacs-lisp
+(let* ((annotation (lambda (key)
+		     (concat " -- " (bibtex-completion-apa-format-reference key))))
+       (completion-extra-properties `(:annotation-function ,annotation)))
+  (ivy-read "choose: " (org-ref-valid-keys)
+	    :action (lambda (x)
+		      (bibtex-completion-show-entry (list x)))))
+#+END_SRC
+
+
+* Annotating the entries with ivy
+
+
+#+BEGIN_SRC emacs-lisp
+(defun tf (key)
+  (format "%30s %s"
+	  (string-pad key 30 ? )
+	  (bibtex-completion-apa-format-reference key)))
+
+(ivy-configure 'my-caller :display-transformer-fn 'tf)
+
+(ivy-read "choose: " (org-ref-valid-keys) :caller 'my-caller)
+#+END_SRC
+
+This is not my favorite way to do this though, the transformed strings are not used in filtering!
+
+* Building the strings
+
+To get the strings fully searchable, they /must/ be part of the candidate strings. However, we do not want the string itself from completion, we want the key associated with it! Ivy sends the whole candidate to the action function, so we just make each candidate a cons cell, or list or something.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(let ((candidates (cl-loop for key in (org-ref-valid-keys) 
+			   collect (cons
+				    (bibtex-completion-apa-format-reference key)
+				    key))))
+  (ivy-read "choose: " candidates
+	    :action '(1
+		      ("v" (lambda (x)
+			     (message-box "%S" x))
+		       "view")
+		      ("o" (lambda (x)
+			     (bibtex-completion-show-entry
+			      (list (cdr x))))
+		       "open"))))
+#+END_SRC
+
+Here is a plist example
+
+#+BEGIN_SRC emacs-lisp :results silent
+(let ((candidates (cl-loop for key in (seq-take (org-ref-valid-keys) 10)
+			   collect (list (bibtex-completion-apa-format-reference
+					  key)
+					 :key key))))
+  (ivy-read "choose: " candidates
+	    :action '(1
+		      ("v" (lambda (x)
+			     (message-box "%S" x))
+		       "view")
+		      ("o" (lambda (x)
+			     (bibtex-completion-show-entry
+			      (list (plist-get (cdr x) :key))))
+		       "open"))))
+#+END_SRC
+
+* Modify Emacs commands that use completion with actions
+
+#+BEGIN_SRC emacs-lisp :results silent
+(ivy-add-actions
+ 'find-file
+ '(("r" (lambda (x)
+	  (rename-file x (read-file-name "Rename to: "))
+	  (recursive-edit)
+	  (ivy-quit-and-run))
+    "rename"))) 
+#+END_SRC
+
+#+BEGIN_SRC sh
+ls test.*
+#+END_SRC
+
+#+RESULTS:
+: test.txt
+
+[[./test.txt]]  
+
+* Change your mind? Change the command
+
+This is a scimax feature, your current command can "become" another command. This is an often proclaimed advantage of embark. It wasn't that hard to get this feature in ivy (this is a scimax feature of ivy).
+
+Say you want help on a symbol in Emacs so you type C-h f org-ref-ref-types and OH NO, it is not a function. Oh yeah, that is a variable. 
+
+You could type C-g, and start over. Boo.... so many keystrokes
+
+
+Instead: s-b C-h v and off you are to the documentation.
+
+* Finally, some other scimax modifications
+
+| C-ret      | default action          |
+| S-ret      | default action and next |
+| M-ret      | alternate action        |
+| s-ret      | quit ivy   - no action  |
+| C-k        | clear candidate         |
+| s-r or H-r | resume                  |
+| M-tab      | toggle mark candidate   |
+| C-s        | show marked candidates  |
+| s-o        | ivy-occur               |
+| s-b        | scimax-ivy-become       |
+| C-h        | keybinding help         |
+
+Lots of extra actions on counsel and projectile commands
+
+[[cite:&himanen-2018-mater-struc;&wang-2018-overc-site]]
+
+[[cite:&himanen-2018-mater-struc;&darby-2018-lonel-atoms;&wang-2018-overc-site;&gastegger-2018-wacsf-weigh;&himanen-2018-mater-struc]]
+
+[[cite:&himanen-2018-mater-struc;&darby-2018-lonel-atoms;&gastegger-2018-wacsf-weigh]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+scimax - ivy for completion with actions
+
+One of the core, critical features of Emacs is completion, where you choose from a set of possible candidates and then do something with that choice. ivy is one of many completion tools, and still one of my favorites. In this video I will show how ivy works with Emacs and completion, and some customizations I have made for it in scimax.
+
+This enhancements can be found at https://github.com/jkitchin/scimax/blob/master/scimax-ivy.el
